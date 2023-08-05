@@ -6,7 +6,7 @@ import SearchPanel from "../../js/components/searchPanel/index.js";
 
 const header = new Header({additionalClassNames: ['main-page-header']});
 const navPanel = new NavPanel({currentPage: 'favorites'});
-const noteList = new NoteList();
+const noteList = new NoteList(null, true);
 const searchPanel = new SearchPanel({noteList: noteList});
 
 

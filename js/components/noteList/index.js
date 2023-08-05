@@ -15,16 +15,24 @@ noteTitle: "Johcn"
 */
 
 class NoteList extends BasicComponent {
-  constructor(noteComponents) {
-    const notes = noteComponents ?? appStorage.getNoteComponents();
+  #isFavoritesList;
+  currentSearchQuery = '';
+
+  constructor(noteComponents, isFavoritesList = false) {
+    const allNotes = noteComponents ?? appStorage.getNoteComponents();
+    const favoriteFilteredNotes = isFavoritesList
+      ? allNotes.filter((noteComponent) => noteComponent.noteState.isFavorite)
+      : allNotes;
 
     super({
       elementType: 'div',
       basicClassNames: ['note-list'],
-      children: notes,
+      children: favoriteFilteredNotes,
     });
 
-    this.noteListChildren = notes;
+    this.#isFavoritesList = isFavoritesList;
+    this.noteListChildren = favoriteFilteredNotes;
+
     this.element.addEventListener('click', this.handleNoteListClick.bind(this));
   }
 
@@ -44,6 +52,9 @@ class NoteList extends BasicComponent {
 
         if (noteComponent) {
           noteComponent.toggleFavorite();
+          if (this.#isFavoritesList) {
+            this.filterNotes(this.currentSearchQuery);
+          }
         }
 
         break;
@@ -97,7 +108,11 @@ class NoteList extends BasicComponent {
   }
 
   updateNoteList(noteComponents) {
-    const newNoteList = new NoteList(noteComponents);
+    const notes = (this.#isFavoritesList)
+      ? noteComponents.filter((noteComponent) => noteComponent.noteState.isFavorite)
+      : noteComponents;
+
+    const newNoteList = new NoteList(notes);
     const newNoteElements = newNoteList.element.querySelectorAll('.note');
 
     if (noteComponents) {

@@ -8,7 +8,6 @@ const DEFAULT_CLASS_LIST = ['search-panel'];
 class SearchPanel extends BasicComponent {
   #noteListComponent = null;
   searchInputComponent = null;
-  currentSearchQuery = '';
 
   constructor(argsObj = {}) {
     checkIsObject(argsObj);
@@ -44,8 +43,8 @@ class SearchPanel extends BasicComponent {
 
     setTimeout(() => {
       const searchQuery = this.searchInputComponent.element.value;
-      if (searchQuery !== this.currentSearchQuery) {
-        this.currentSearchQuery = searchQuery;
+      if (searchQuery !== this.#noteListComponent.currentSearchQuery) {
+        this.#noteListComponent.currentSearchQuery = searchQuery;
         this.searchNotes();
       }
 
@@ -53,7 +52,7 @@ class SearchPanel extends BasicComponent {
   }
 
   searchNotes() {
-    const searchQuery = this.currentSearchQuery;
+    const searchQuery = this.#noteListComponent.currentSearchQuery;
 
     this.#noteListComponent.filterNotes(searchQuery);
   }
