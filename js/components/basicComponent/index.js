@@ -23,6 +23,10 @@ class BasicComponent {
     this._element = this.createElement(argsObj);
   }
 
+  get element() {
+    return this._element;
+  }
+
   createElement(argsObj) {
     const element = document.createElement(argsObj.elementType ?? 'div');
 
@@ -50,9 +54,7 @@ class BasicComponent {
     return element;
   }
 
-  get element() {
-    return this._element;
-  }
+
 
 }
 

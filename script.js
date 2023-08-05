@@ -4,8 +4,9 @@ import NoteCreatorForm from "./js/components/noteCreatorForm/index.js";
 import NoteList from "./js/components/noteList/index.js";
 
 const header = new Header({additionalClassNames: ['main-page-header']});
-const noteCreator = new NoteCreatorForm();
 const noteList = new NoteList();
+const noteCreator = new NoteCreatorForm({noteList: noteList});
+
 
 const mainPageLayout = [
   appDialog,

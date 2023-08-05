@@ -45,12 +45,12 @@ class Note extends BasicComponent {
     this.element.innerHTML = getNoteInnerHTML(this.#noteArgs);
   }
 
-  deleteNote() {
-    console.log('delete note!');
-    const message = `Are you sure want to delete this note: "${this.#noteArgs.noteTitle}"?`;
+  deleteNote(outerCallback) {
+    const message = `Are you sure, want to delete this note: "${this.#noteArgs.noteTitle}"?`;
     const deleteCallback = () => {
       appStorage.deleteNote(this.#noteArgs.noteId);
       this.element.remove();
+      outerCallback();
     };
 
     appDialog.openDialog(message, deleteCallback);

@@ -1,3 +1,4 @@
+import Note from "../components/note/index.js";
 import { getNoteDateString } from "../utils/dateHandling.js";
 
 class AppStorage {
@@ -19,8 +20,13 @@ class AppStorage {
     return this.storageNotelist.map((note) => note.noteId);
   }
 
-  addNote(noteFormData) {
-    const storageNote = this.#createStorageNote(noteFormData);
+  getNoteComponents() {
+    return this.storageNotelist.map((storageNote) => {
+      return new Note(storageNote);
+    })
+  };
+
+  addNote(storageNote) {
     const storageNoteList = this.storageNotelist;
 
     storageNoteList.push(storageNote);
@@ -58,7 +64,7 @@ class AppStorage {
     localStorage.setItem(this.storageNoteListName, storageNoteListString);
   }
 
-  #createStorageNote(noteFormData) {
+  createStorageNote(noteFormData) {
     const creationDate = new Date();
 
     return {

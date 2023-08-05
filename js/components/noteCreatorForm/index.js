@@ -23,7 +23,7 @@ class NoteCreatorForm extends BasicComponent {
 
     this.getFormElementById = createElementsGetter(this._element, this.#elementsLib);
 
-    makeNoteCreatorInteractive(this.getFormElementById, this._element);
+    makeNoteCreatorInteractive(this.getFormElementById, this._element, formArgsObj.noteList);
   }
 
 }

@@ -14,9 +14,7 @@ noteTitle: "Johcn"
 
 class NoteList extends BasicComponent {
   constructor() {
-    const notes = appStorage.storageNotelist.map((storageNote) => {
-      return new Note(storageNote);
-    })
+    const notes = appStorage.getNoteComponents();
 
     super({
       elementType: 'div',
@@ -60,12 +58,40 @@ class NoteList extends BasicComponent {
         const noteComponent = this.getNoteComponentByButton(target);
 
         if (noteComponent) {
-          noteComponent.deleteNote();
+          noteComponent.deleteNote(() => this.deleteNoteFromList(noteComponent));
         }
 
         break;
       }
 
+    }
+  }
+
+  updateNoteList() {
+    console.log('Update list');
+    const newElementChildren = new NoteList()
+      .element
+      .querySelectorAll('.note');
+
+    this.element.innerHTML = '';
+    this.element.append(...newElementChildren)
+  }
+
+  addNoteToList(storageNoteData) {
+    const newNote = new Note(storageNoteData);
+    this.noteListChildren.push(newNote);
+    this.element.append(newNote.element);
+  }
+
+  deleteNoteFromList(noteComponent) {
+    const noteIndex = this.noteListChildren.findIndex((component) => {
+      return component.element.id === noteComponent.element.id;
+    });
+
+    if (noteIndex >= 0) {
+      this.noteListChildren.splice(noteIndex, 1);
+    } else {
+      throw new Error('Note not found!');
     }
   }
 

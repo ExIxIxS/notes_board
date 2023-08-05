@@ -1,7 +1,7 @@
 import appStorage from "../../services/appStorage.service.js";
 import { checkFormForValidData, isFormValid } from "./formValidation.js";
 
-function makeNoteCreatorInteractive(elementsGetter, form) {
+function makeNoteCreatorInteractive(elementsGetter, form, noteListComponent) {
   const noteTitleInput = elementsGetter('#note-title');
   noteTitleInput.addEventListener('input', () => makeElementValid(noteTitleInput));
 
@@ -15,31 +15,34 @@ function makeNoteCreatorInteractive(elementsGetter, form) {
   bgColorRadioInput_2.addEventListener('input', () => makeElementValid(bgColorRadioInput_2.parentElement.parentElement));
 
   const submitButton = elementsGetter('#create-note-submit-button');
-  submitButton.addEventListener('click', () => handleSubmitClick(elementsGetter,form));
+  submitButton.addEventListener('click', () => handleSubmitClick(elementsGetter,form, noteListComponent));
 
 
   form.addEventListener('submit', (event) => {
     event.preventDefault;
-    handleSubmitClick(elementsGetter, form);
+    handleSubmitClick(elementsGetter, form, noteListComponent);
   });
   form.addEventListener('reset', resetForm);
 }
 
-function submitForm(elementsGetter) {
+function submitForm(elementsGetter, noteListComponent) {
   const noteFormData = getNoteFormData(elementsGetter);
 
   clearNoteFormInputs(elementsGetter);
-  appStorage.addNote(noteFormData);
+  const storageNote = appStorage.createStorageNote(noteFormData)
+  appStorage.addNote(storageNote);
+  noteListComponent.addNoteToList(storageNote);
+
 }
 
 function resetForm(event) {
   event.preventDefault();
 }
 
-function handleSubmitClick(elementsGetter, form) {
+function handleSubmitClick(elementsGetter, form, noteListComponent) {
   checkFormForValidData(elementsGetter);
   if (isFormValid(form)) {
-    submitForm(elementsGetter);
+    submitForm(elementsGetter, noteListComponent);
   }
 }
 

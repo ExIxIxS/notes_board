@@ -13,12 +13,9 @@ class Dialog extends BasicComponent {
       id: 'app-dialog',
       basicClassNames: ['dialog'],
       additionalClassNames: ['dialog--closed'],
-      innerHTML: getDialogInnerHTML(),
     });
 
-    this.element.hidden = true;
     this.element.addEventListener('click', this.handleDialogClick.bind(this));
-
   }
 
   handleDialogClick(e) {
@@ -53,6 +50,7 @@ class Dialog extends BasicComponent {
   closeDialog() {
     this.element.classList.add('dialog--closed');
     this.#currentConfirmCallback = null;
+    this.element.innerHTML = '';
   }
 
   confirmDialog() {
