@@ -2,17 +2,8 @@ import BasicComponent from "../basicComponents/basicComponent/index.js";
 import Note from "../note/index.js";
 
 import appStorage from "../../services/appStorage.service.js";
-import { isNonEmptyString } from "../../utils/componentFunctions.js";
 
-/*
-bgColor:"green"
-date: "12:25 17.05.2023"
-isFavorite: false
-isUpdated: false
-noteDescription: "Dfdffdfdf"
-noteId: 35697347
-noteTitle: "Johcn"
-*/
+import { getNoteByButton, isNonEmptyString } from "../../utils/componentFunctions.js";
 
 class NoteList extends BasicComponent {
   #isFavoritesList;
@@ -167,10 +158,6 @@ class NoteList extends BasicComponent {
     return this.getNoteComponentByButton(buttonElement);
   }
 
-}
-
-function getNoteByButton(buttonElement) {
-  return buttonElement.parentElement.parentElement;
 }
 
 export default NoteList;

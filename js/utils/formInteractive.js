@@ -1,5 +1,5 @@
 import appStorage from "../services/appStorage.service.js";
-import { checkFormForValidData, isFormValid } from "./formValidation.js";
+import { checkFormForValidData, checkNoteEditorForValidData, isFormValid } from "./formValidation.js";
 
 import { BG_NOTE_COLORS } from "../constants/appData.constants.js";
 
@@ -37,6 +37,22 @@ function handleSubmitClick(elementsGetter, form, noteListComponent) {
 
   if (isFormValid(form, validInputsNumber )) {
     submitForm(elementsGetter, noteListComponent);
+  }
+}
+
+function submitNoteEditorForm(noteComponent, titleInput, descriptionInput) {
+  const noteEditorFormData = getNoteEditorFormData(titleInput, descriptionInput);
+
+  noteComponent.updateNoteState(noteEditorFormData, true);
+  noteComponent.endNoteEditing();
+}
+
+function handleNoteEditorSubmitClick(noteComponent, form, titleInput, descriptionInput) {
+  checkNoteEditorForValidData(titleInput, descriptionInput);
+  const validInputsAmount = 2;
+
+  if (isFormValid(form, validInputsAmount)) {
+    submitNoteEditorForm(noteComponent, titleInput, descriptionInput);
   }
 }
 
@@ -81,8 +97,16 @@ function clearNoteFormInputs(elementsGetter) {
   elementsGetter('#bg-color-option-1').checked = true;
 }
 
+function getNoteEditorFormData(noteTitleInput, noteDescriptionInput) {
+  return {
+    noteTitle: noteTitleInput.value,
+    noteDescription: noteDescriptionInput.value,
+  };
+}
+
 export {
   makeNoteCreatorInteractive,
   makeElementValid,
   makeElementInvalid,
+  handleNoteEditorSubmitClick,
 };

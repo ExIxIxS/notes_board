@@ -12,7 +12,7 @@ class InputLabel extends BasicComponent {
     });
 
     if (labelArgsObj.for) {
-      this._element.for = labelArgsObj.for;
+      this.element.htmlFor = labelArgsObj.for;
     }
   }
 }

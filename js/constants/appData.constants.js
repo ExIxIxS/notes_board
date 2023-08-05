@@ -13,6 +13,4 @@ bgNoteColors.forEach((bgColor) => {
 
 const BG_NOTE_COLORS = Object.freeze(bgNoteColors);
 
-export {
-  BG_NOTE_COLORS,
-}
+export { BG_NOTE_COLORS }

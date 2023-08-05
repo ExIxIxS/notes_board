@@ -5,16 +5,6 @@ import {
   isNonEmptyString
 } from "../../../utils/componentFunctions.js";
 
-/*
-{
-  elementType: string,
-  id: string,
-  basicClassNames: string[],
-  additionalClassNames: string[],
-  children: components[]
-  innerHTML: string;
-}
-*/
 
 class BasicComponent {
   constructor(argsObj = {}) {
@@ -34,7 +24,8 @@ class BasicComponent {
       element.id = argsObj.id;
     }
 
-    const classListsStr = getClasslist(argsObj.basicClassNames ?? [], argsObj.additionalClassNames);
+    const basicClassNames = argsObj.basicClassNames ?? [];
+    const classListsStr = getClasslist(basicClassNames, argsObj.additionalClassNames);
 
     if (classListsStr) {
       element.className = classListsStr;

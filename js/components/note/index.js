@@ -2,23 +2,13 @@ import BasicComponent from "../basicComponents/basicComponent/index.js";
 import appDialog from "../dialog/index.js";
 
 import appStorage from "../../services/appStorage.service.js";
+
 import { checkIsObject, createElementsGetter } from "../../utils/componentFunctions.js";
 import { getNoteEditorFormComponent } from "../../utils/formChildren.js";
 import { getNoteDateString } from "../../utils/dateHandling.js";
-
 import { makeElementValid } from "../../utils/formInteractive.js";
 import { checkDescriptionField, checkTitleField, isFormValid } from "../../utils/formValidation.js";
 import { getBgColorClass } from "../../utils/styleHandling.js";
-
-/*
-bgColor:"green"
-date: "12:25 17.05.2023"
-isFavorite: false
-isUpdated: false
-noteDescription: "Dfdffdfdf"
-noteId: 35697347
-noteTitle: "Johcn"
-*/
 
 class Note extends BasicComponent {
   #noteState;
@@ -145,34 +135,6 @@ class Note extends BasicComponent {
     form.addEventListener('reset', (e) => e.preventDefault());
   }
 
-}
-
-function handleNoteEditorSubmitClick(noteComponent, form, titleInput, descriptionInput) {
-  checkNoteEditorForValidData(titleInput, descriptionInput);
-  const validInputsAmount = 2;
-
-  if (isFormValid(form, validInputsAmount)) {
-    submitNoteEditorForm(noteComponent, titleInput, descriptionInput);
-  }
-}
-
-function checkNoteEditorForValidData(noteTitleInput, noteDescriptionInput) {
-  checkTitleField(noteTitleInput);
-  checkDescriptionField(noteDescriptionInput);
-}
-
-function submitNoteEditorForm(noteComponent, titleInput, descriptionInput) {
-  const noteEditorFormData = getNoteEditorFormData(titleInput, descriptionInput);
-
-  noteComponent.updateNoteState(noteEditorFormData, true);
-  noteComponent.endNoteEditing();
-}
-
-function getNoteEditorFormData(noteTitleInput, noteDescriptionInput) {
-  return {
-    noteTitle: noteTitleInput.value,
-    noteDescription: noteDescriptionInput.value,
-  };
 }
 
 export default Note;

@@ -61,10 +61,16 @@ function isFormValid(formElement, requiredValidInputsAmount) {
   return (validCollection.length === requiredValidInputsAmount);
 }
 
+function checkNoteEditorForValidData(noteTitleInput, noteDescriptionInput) {
+  checkTitleField(noteTitleInput);
+  checkDescriptionField(noteDescriptionInput);
+}
+
 export {
   checkTitleField,
   checkDescriptionField,
   checkFormForValidData,
   isFormValid,
   checkColorFieldset,
+  checkNoteEditorForValidData,
 }

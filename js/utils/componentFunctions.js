@@ -52,6 +52,10 @@ function createElementsGetter(rootElement, elementsLib) {
   }
 }
 
+function getNoteByButton(buttonElement) {
+  return buttonElement.parentElement.parentElement;
+}
+
 export {
   getClasslist,
   isObject,
@@ -61,4 +65,5 @@ export {
   isNonEmptyString,
   isNonNegativeInteger,
   createElementsGetter,
+  getNoteByButton,
 };
