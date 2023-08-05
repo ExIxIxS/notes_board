@@ -1,78 +1,65 @@
-Array.prototype.customFilter = customFilter;
-
-function customFilter(callBack, thisArg) {
-  checkIsFunction(callBack);
-
-  if (arguments.length === 2 && !isThisArgValid(thisArg)) {
-    throw new Error("Invalid argument.");
+function createDebounceFunction(callBack, delay) {
+  if (!isFunction(callBack) || !isPositiveInteger(delay)) {
+    throw new Error('Invalid argument.');
   }
 
-  const resultArr = [];
-  this.forEach((item, index, arr) => {
-    const callResult = callBack.call((thisArg ?? null), item, index, arr);
-
-    if (callResult) {
-      resultArr.push(item);
-    }
-  });
-
-  return resultArr;
-}
-
-function bubbleSort(numArr) {
-  if (!Array.isArray(numArr) || !isArrayOfFinites(numArr)) {
-    throw new Error("Invalid argument.");
-  }
-
-  if (!numArr.length) {
-    return [];
-  }
-
-  return sortArrWithBubbles(numArr);
-}
-
-function sortArrWithBubbles(arr) {
-  const sortedArr = [...arr];
-  const lastIndex = sortedArr.length - 1;
-
-  for (let i = lastIndex; i > 0; i--) {
-    for (let j = 0; j < i; j++) {
-      if (sortedArr[j] > sortedArr[j + 1]) {
-        [sortedArr[j], sortedArr[j + 1]] = [sortedArr[j + 1], sortedArr[j]];
-      }
-    }
-  }
-
-  return sortedArr;
-};
-
-function storageWrapper(callBack, targetArr) {
-  checkIsFunction(callBack);
-
-  if (arguments.length === 2 && !Array.isArray(targetArr)) {
-    throw new Error("Invalid argument.");
-  }
-
-  const logArr = targetArr ?? [];
+  let funcTimerId;
 
   return () => {
-    const nextValue = callBack();
-    logArr.push(nextValue);
+    if (funcTimerId) {
+      clearTimeout(funcTimerId);
+    }
 
-    return (targetArr) ? nextValue : logArr;
+    funcTimerId = setTimeout(callBack, delay);
+  }
+};
+
+const API_ROOT_PATH = 'https://rickandmortyapi.com/api/';
+
+class RickAndMorty {
+  getCharacter(characterId) {
+    if (!isPositiveInteger(characterId)) {
+      throw new Error('Invalid character id');
+    }
+
+    return fetch(`${API_ROOT_PATH}/character/${characterId}`)
+      .then(response => response.json())
+      .then(character => {
+        if (character.error) {
+          throw new Error(character.error);
+        };
+
+        return character;
+      })
+      .catch(() => {
+        return null;
+      });
+  }
+
+  async getEpisode(episodeId) {
+    if (!isPositiveInteger(episodeId)) {
+      throw new Error('Invalid episode id');
+    }
+
+    try {
+      const response = await fetch(`${API_ROOT_PATH}/episode/${episodeId}`);
+      const episode = await response.json();
+
+      if (episode.error) {
+        throw new Error(episode.error);
+      };
+
+      return episode;
+    } catch {
+      return null;
+    }
   }
 }
 
-function isArrayOfFinites(arr) {
-  return arr.every((item) => Number.isFinite(item));
+function isFunction(func) {
+  return (typeof(func) === 'function');
 }
 
-function isThisArgValid(thisArg) {
-  return thisArg && typeof(thisArg) === 'object';
-}
-
-function checkIsFunction(func) {
-  if (!func || typeof(func) !== 'function') {
-    throw new Error("Invalid argument.");
-  }
+function isPositiveInteger(num) {
+  return (Number.isInteger(num) && num >= 0);
 }
