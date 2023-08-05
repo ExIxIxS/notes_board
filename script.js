@@ -1,8 +1,8 @@
 import Header from "./js/components/header/index.js";
-import NoteCreator from "./js/components/noteCreator/index.js";
+import NoteCreatorForm from "./js/components/noteCreatorForm/index.js";
 
 const header = new Header({additionalClassNames: ['main-page-header']});
-const noteCreator = new NoteCreator();
+const noteCreator = new NoteCreatorForm();
 
 const mainPageLayout = [
   header,

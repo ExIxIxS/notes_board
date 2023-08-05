@@ -1,3 +1,4 @@
+import appStorage from "../../services/appStorage.service.js";
 import { checkFormForValidData, isFormValid } from "./formValidation.js";
 
 function makeNoteCreatorInteractive(elementsGetter, form) {
@@ -26,11 +27,9 @@ function makeNoteCreatorInteractive(elementsGetter, form) {
 
 function submitForm(elementsGetter) {
   const noteFormData = getNoteFormData(elementsGetter);
-  console.log(noteFormData);
-  clearNoteFormInputs(elementsGetter);
 
-  //localStorage.setItem('notesList', JSON.stringify([])); //cart is empty now
-  console.log('Submited!!!');
+  clearNoteFormInputs(elementsGetter);
+  appStorage.addNote(noteFormData);
 }
 
 function resetForm(event) {
