@@ -60,9 +60,9 @@ function getNoteFormData(elementsGetter) {
   const radioInputs = elementsGetter('#color-fieldset').querySelectorAll('input');
 
   for (let input of radioInputs) {
-      if (input.checked === true) {
-        noteFormData.bgColor = input.value;
-      }
+    if (input.checked === true) {
+      noteFormData.bgColor = input.value;
+    }
   }
 
   return noteFormData;

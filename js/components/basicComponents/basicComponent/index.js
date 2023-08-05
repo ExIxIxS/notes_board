@@ -20,21 +20,25 @@ class BasicComponent {
   constructor(argsObj = {}) {
     checkIsObject(argsObj);
 
-    this._element = this.createElement(argsObj);
+    this._element = this.#createElement(argsObj);
   }
 
   get element() {
     return this._element;
   }
 
-  createElement(argsObj) {
+  #createElement(argsObj) {
     const element = document.createElement(argsObj.elementType ?? 'div');
 
     if (isNonEmptyString(argsObj.id)) {
       element.id = argsObj.id;
     }
 
-    element.classList = getClasslist(argsObj.basicClassNames ?? [], argsObj.additionalClassNames);
+    const classListsStr = getClasslist(argsObj.basicClassNames ?? [], argsObj.additionalClassNames);
+
+    if (classListsStr) {
+      element.className = classListsStr;
+    }
 
     if (isNonEmptyString(argsObj.innerHTML)) {
       element.innerHTML = argsObj.innerHTML;
@@ -53,8 +57,6 @@ class BasicComponent {
 
     return element;
   }
-
-
 
 }
 

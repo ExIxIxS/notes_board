@@ -9,6 +9,7 @@ import { getNoteDateString } from "../../utils/dateHandling.js";
 import { loadCSS } from "../../utils/cssFunctions.js";
 import { makeElementValid } from "../../utils/formInteractive.js";
 import { checkDescriptionField, checkTitleField, isFormValid } from "../../utils/formValidation.js";
+import { getBgColorClass } from "../../utils/styleHandling.js";
 
 loadCSS('./js/components/note/note.css');
 
@@ -33,7 +34,7 @@ class Note extends BasicComponent {
       elementType: 'div',
       id: noteArgsObj.noteId,
       basicClassNames: ['note'],
-      additionlClassNames: [noteArgsObj.bgColor],
+      additionalClassNames: [getBgColorClass(noteArgsObj.bgColor) ?? ''],
     });
 
     this.#noteState = noteArgsObj;

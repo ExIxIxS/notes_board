@@ -1,8 +1,10 @@
 .note-list {
+  max-height: 400px;
+  overflow: auto;
+  margin: 10px 0;
   padding: 0 6px;
   display: flex;
   flex-direction: column;
-  width: 100%;
   align-items: center;
   row-gap: 16px;
 }

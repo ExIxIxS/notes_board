@@ -9,7 +9,7 @@ function getClasslist(mainClasslist, additionalClasslist) {
       ? mainClasslist.concat(additionalClasslist)
       : mainClasslist;
 
-  return classList.join(' ')
+  return classList.length ? classList.join(' ') : '';
 }
 
 function isObject(obj) {

@@ -1,3 +1,7 @@
+:root {
+  --default-background-color: #f0f8ff;
+}
+
 .note {
   width: 100%;
   max-width: 500px;
@@ -6,8 +10,33 @@
   position: relative;
   display: flex;
   justify-content: space-between;
-  background-color: aliceblue;
+  background-color: var(--default-background-color);
   border-radius: 16px;
+}
+
+.note.bg-color-ff99c8 {
+  background-color: #ffe5f1;
+  color: #7f7100;
+}
+
+.note.bg-color-fcf6bd {
+  background-color: #fffde6;
+  color: #017915;
+}
+
+.note.bg-color-d0f4de {
+  background-color: #e5ffee;
+  color: #de468a;
+}
+
+.note.bg-color-a9def9 {
+  background-color: #a6defc;
+  color: #372697;
+}
+
+.note.bg-color-e4c1f9 {
+  background-color: #db99ff;
+  color: #1b2fa8;
 }
 
 .note .note__buttons {
@@ -24,9 +53,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #f09628;
-  background-color: #ffffff;
-  border: 1px solid #f09628;
+  color: inherit;
+  border: 1px solid;
+  border-color: inherit;
   border-radius: 50%;
 }
 
