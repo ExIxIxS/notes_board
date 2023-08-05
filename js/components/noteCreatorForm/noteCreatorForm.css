@@ -1,0 +1,47 @@
+.note-creator-form {
+  width: 100%;
+  max-width: 920px;
+  padding: 10px 60px;
+  background-color: whitesmoke;
+  border-radius: 30px;
+}
+
+.note-creator-form .basic-form-input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.note-creator-form .color-data {
+  display: flex;
+  flex-direction: row;
+  padding: 10px 2px;
+  justify-content: space-evenly;
+}
+
+.note-creator-form .color-data .basic-form-input {
+  width: auto;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  text-align: center;
+}
+
+.note-creator-form .form-submit-button {
+  width: 130px;
+  height: 39px;
+  margin: 10px;
+  align-self: center;
+}
+
+@media (max-width: 756px) {
+  .note-creator-form {
+    padding: 10px;
+  }
+
+  .note-creator-form .text-data .form-label {
+    display: none;
+  }
+
+}

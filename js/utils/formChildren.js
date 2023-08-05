@@ -9,7 +9,7 @@ import { BG_NOTE_COLORS } from "../constants/appData.constants.js";
 
 function getNoteFormChildren() {
   return [
-    getFormTitleComponent(),
+    getFormTitleComponent('Create a new note'),
     getTextFieldsetComponent(),
     getColorFieldsetComponent(),
     getSubmitButtonComponent('create-note-submit-button'),

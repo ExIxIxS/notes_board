@@ -5,7 +5,7 @@
 .note {
   width: 100%;
   max-width: 500px;
-  min-width: 300px;
+  min-width: 280px;
   padding: 10px;
   position: relative;
   display: flex;
@@ -79,8 +79,10 @@
 }
 
 .note .note__description {
+  max-width: 400px;
   font-size: 22px;
   margin: 6px 0;
+  overflow: hidden;
 }
 
 .note .note__date {
@@ -110,4 +112,11 @@
   align-items: center;
   overflow: hidden;
   font-size: 20px;
+}
+
+@media (max-width: 532px) {
+  .note .note__description {
+    max-width: 206px;
+  }
+
 }

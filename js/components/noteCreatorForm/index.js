@@ -3,6 +3,9 @@ import BasicComponent from "../basicComponents/basicComponent/index.js";
 import { getNoteFormChildren } from "../../utils/formChildren.js";
 import { checkIsObject, createElementsGetter } from "../../utils/componentFunctions.js";
 import { makeNoteCreatorInteractive } from "../../utils/formInteractive.js";
+import { loadCSS } from "../../utils/cssFunctions.js";
+
+loadCSS('./js/components/noteCreatorForm/noteCreatorForm.css');
 
 const DEFAULT_CLASS_LIST = ['note-creator-form'];
 

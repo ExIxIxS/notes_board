@@ -1,6 +1,8 @@
 import appStorage from "../services/appStorage.service.js";
 import { checkFormForValidData, isFormValid } from "./formValidation.js";
 
+import { BG_NOTE_COLORS } from "../constants/appData.constants.js";
+
 function makeNoteCreatorInteractive(elementsGetter, form, noteListComponent) {
   const noteTitleInput = elementsGetter('#note-title-input');
   noteTitleInput.addEventListener('input', () => makeElementValid(noteTitleInput));
@@ -8,11 +10,10 @@ function makeNoteCreatorInteractive(elementsGetter, form, noteListComponent) {
   const noteDescriptionInput = elementsGetter('#note-description-input');
   noteDescriptionInput.addEventListener('input', () => makeElementValid(noteDescriptionInput));
 
-  const bgColorRadioInput_1 = elementsGetter('#bg-color-option-1');
-  bgColorRadioInput_1.addEventListener('input', () => makeElementValid(bgColorRadioInput_1.parentElement.parentElement));
-
-  const bgColorRadioInput_2 = elementsGetter('#bg-color-option-2');
-  bgColorRadioInput_2.addEventListener('input', () => makeElementValid(bgColorRadioInput_2.parentElement.parentElement));
+  BG_NOTE_COLORS.forEach((_, index) => {
+    const bgColorRadioInput = elementsGetter(`#bg-color-option-${index + 1}`);
+    bgColorRadioInput.addEventListener('input', () => makeElementValid(bgColorRadioInput.parentElement.parentElement));
+  });
 
   const submitButton = elementsGetter('#create-note-submit-button');
   submitButton.addEventListener('click', () => handleSubmitClick(elementsGetter,form, noteListComponent));
