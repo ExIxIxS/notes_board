@@ -1,8 +1,6 @@
 import { getNoteDateString } from "../utils/dateHandling.js";
 
 class AppStorage {
-  #storeIds = {};
-
   constructor(storageName) {
     this.storageName = storageName;
   }
@@ -17,12 +15,29 @@ class AppStorage {
     return storageNoteList ? JSON.parse(storageNoteList) : [];
   }
 
+  get #storageNoteIds() {
+    return this.storageNotelist.map((note) => note.noteId);
+  }
+
   addNote(noteFormData) {
     const storageNote = this.#createStorageNote(noteFormData);
     const storageNoteList = this.storageNotelist;
 
     storageNoteList.push(storageNote);
     this.#setStorageNoteList(storageNoteList);
+  }
+
+  updateNote(updatedStorageNote) {
+    const currentNoteList = this.storageNotelist;
+    const noteIndex = currentNoteList
+      .findIndex((storageNote) => storageNote.noteId === updatedStorageNote.noteId);
+
+
+    if (noteIndex >=0) {
+      currentNoteList[noteIndex] = updatedStorageNote;
+      this.#setStorageNoteList(currentNoteList);
+      console.log(this.storageNotelist);
+    }
   }
 
   #setStorageNoteList(storageNoteList) {
@@ -35,11 +50,25 @@ class AppStorage {
 
     return {
       ...noteFormData,
-      noteId: '',
+      noteId: this.#getNewNoteId(),
       date: getNoteDateString(creationDate),
       isUpdated: false,
       isFavorite: false,
     }
+  }
+
+  #getNewNoteId() {
+    const newId = this.#generateRandomStorageId();
+
+    return (!this.#storageNoteIds.includes(newId)) ? `note#${newId}` : this.#getNewNoteId;
+  }
+
+  #generateRandomStorageId() {
+    const ID_LENGTH = 8;
+    const newId = Math.random() * (10 ** ID_LENGTH);
+    const idString = newId.toFixed();
+
+    return idString;
   }
 }
 
