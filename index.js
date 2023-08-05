@@ -1,148 +1,78 @@
-function makeDeepCopy(originalObj) {
-  if (!originalObj || typeof(originalObj) !== 'object' || Array.isArray(originalObj)) {
-    throw new Error();
+Array.prototype.customFilter = customFilter;
+
+function customFilter(callBack, thisArg) {
+  checkIsFunction(callBack);
+
+  if (arguments.length === 2 && !isThisArgValid(thisArg)) {
+    throw new Error("Invalid argument.");
   }
 
-  return recursiveDeepCopy(originalObj);
-}
+  const resultArr = [];
+  this.forEach((item, index, arr) => {
+    const callResult = callBack.call((thisArg ?? null), item, index, arr);
 
-function recursiveDeepCopy(original) {
-  if (!original || typeof(original) !== 'object') {
-    return original;
-  }
-
-  if (Array.isArray(original)) {
-     return original.map((item) => recursiveDeepCopy(item));
-  }
-
-  if (original instanceof Map) {
-    const mapCopy = new Map();
-    original.forEach((value, key) => {
-      mapCopy.set(recursiveDeepCopy(key), recursiveDeepCopy(value));
-    });
-
-    return mapCopy;
-  }
-
-  if (original instanceof Set) {
-    const setCopy = new Set();
-    original.forEach((value) => {
-      setCopy.add(recursiveDeepCopy(value));
-    });
-
-    return setCopy;
-  }
-
-  const deepObjCopy = {};
-  for (let key in original) {
-    deepObjCopy[key] = recursiveDeepCopy(original[key]);
-  }
-
-  return deepObjCopy;
-}
-
-function createIterable(...limitArgs) {
-  if (limitArgs.length !== 2) {
-    throw new Error();
-  }
-
-  limitArgs.forEach((limit) => {
-    if (!Number.isInteger(limit)) {
-      throw new Error();
+    if (callResult) {
+      resultArr.push(item);
     }
-  })
+  });
 
-  const [from, to] = limitArgs;
-
-  if (to <= from) {
-    throw new Error();
-  }
-
-  const iterableObj = {};
-  iterableObj[Symbol.iterator] = getIterator.bind(null, from, to);
-
-  return iterableObj;
+  return resultArr;
 }
 
-function getIterator(from, to) {
-  let currentValue = from - 1;
+function bubbleSort(numArr) {
+  if (!Array.isArray(numArr) || !isArrayOfFinites(numArr)) {
+    throw new Error("Invalid argument.");
+  }
 
-  return {
-    next: () => {
-      currentValue++;
+  if (!numArr.length) {
+    return [];
+  }
 
-      return {
-        value: currentValue,
-        done: currentValue > to,
+  return sortArrWithBubbles(numArr);
+}
+
+function sortArrWithBubbles(arr) {
+  const sortedArr = [...arr];
+  const lastIndex = sortedArr.length - 1;
+
+  for (let i = lastIndex; i > 0; i--) {
+    for (let j = 0; j < i; j++) {
+      if (sortedArr[j] > sortedArr[j + 1]) {
+        [sortedArr[j], sortedArr[j + 1]] = [sortedArr[j + 1], sortedArr[j]];
       }
     }
   }
-}
 
-// could be passed any plain object, not only empty like in example;
-function createProxy(originalObj) {
-  if (!originalObj || typeof(originalObj) !== 'object' || Array.isArray(originalObj)) {
-    throw new Error();
+  return sortedArr;
+};
+
+function storageWrapper(callBack, targetArr) {
+  checkIsFunction(callBack);
+
+  if (arguments.length === 2 && !Array.isArray(targetArr)) {
+    throw new Error("Invalid argument.");
   }
 
-  const proxyHandler = {
-    get: proxyGetter,
-    set: proxySetter
-  };
+  const logArr = targetArr ?? [];
 
-  return new Proxy(originalObj, proxyHandler);
-}
+  return () => {
+    const nextValue = callBack();
+    logArr.push(nextValue);
 
-function proxyGetter(target, prop) {
-  if (isPropExists(target, prop)) {
-    if (isPropIsObj(target, prop)) {
-      target[prop].readAmount = (target[prop].readAmount || 0) + 1;
-    } else {
-      target[prop] = {
-        value: target[prop],
-        readAmount: 1,
-      }
-    }
-
-    return target[prop];
-  }
-
-  return;
-}
-
-function proxySetter(target, prop, value) {
-  if (!isPropExists(target, prop)) {
-    target[prop] = {
-      value: value,
-      readAmount: 0,
-    }
-
-    return;
-  }
-
-  if (isPropIsObj(target, prop)) {
-    if (isObjValueTypeEqual(target, prop, value)) {
-      target[prop] = {...target[prop], value: value};
-    }
-  } else {
-    if (isPrimitiveTypeEqual(target, prop, value)) {
-      target[prop] = {value: value, readAmount: 0}
-    }
+    return (targetArr) ? nextValue : logArr;
   }
 }
 
-function isPropExists(obj, propName) {
-  return propName in obj;
+function isArrayOfFinites(arr) {
+  return arr.every((item) => Number.isFinite(item));
 }
 
-function isPropIsObj(obj, propName) {
-  return obj[propName] && typeof(obj[propName]) === 'object';
+function isThisArgValid(thisArg) {
+  return thisArg && typeof(thisArg) === 'object';
 }
 
-function isObjValueTypeEqual(obj, propName, value) {
-  return typeof(value) === typeof(obj[propName].value) || typeof(value) === typeof(obj[propName]);
-}
-
-function isPrimitiveTypeEqual(obj, propName, value) {
-  return typeof(value) === typeof(obj[propName]);
+function checkIsFunction(func) {
+  if (!func || typeof(func) !== 'function') {
+    throw new Error("Invalid argument.");
+  }
 }
