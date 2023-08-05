@@ -1,10 +1,10 @@
-import BasicComponent from "../basicComponent/index.js";
+import BasicComponent from "../basicComponents/basicComponent/index.js";
 
-import { getNoteFormChildren } from "./formChildren.js";
+import { getNoteFormChildren } from "../../utils/formChildren.js";
 import { checkIsObject, createElementsGetter } from "../../utils/componentFunctions.js";
-import { makeNoteCreatorInteractive } from "./formInteractive.js";
+import { makeNoteCreatorInteractive } from "../../utils/formInteractive.js";
 
-const DEFAULT_CLASS_LIST = ['note-creator'];
+const DEFAULT_CLASS_LIST = ['note-creator-form'];
 
 class NoteCreatorForm extends BasicComponent {
   #elementsLib = {};

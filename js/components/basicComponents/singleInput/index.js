@@ -1,4 +1,4 @@
-import { checkIsObject, isNonEmptyString, isNonNegativeInteger } from "../../utils/componentFunctions.js";
+import { checkIsObject, isNonEmptyString, isNonNegativeInteger } from "../../../utils/componentFunctions.js";
 import BasicComponent from "../basicComponent/index.js";
 
 class SingleInput extends BasicComponent {
@@ -40,6 +40,7 @@ class SingleInput extends BasicComponent {
 
     if (inputArgsObj.value) {
       this._element.value = inputArgsObj.value;
+      this._element.defaultValue = inputArgsObj.value;
     }
   }
 }

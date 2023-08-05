@@ -1,5 +1,6 @@
-import { NOTE_DESCRIPTION_REQUIREMENT, NOTE_TITLE_REQUIREMENT } from "../../constants/formValidation.constants.js";
 import { makeElementInvalid, makeElementValid } from "./formInteractive.js";
+
+import { NOTE_DESCRIPTION_REQUIREMENT, NOTE_TITLE_REQUIREMENT } from "../constants/formValidation.constants.js";
 
 function checkTitleField(inputElement) {
   const title = inputElement.value;
@@ -44,10 +45,10 @@ function checkColorFieldset(fieldsetElement) {
 }
 
 function checkFormForValidData(elementsGetter) {
-  const noteTitleInput = elementsGetter('#note-title');
+  const noteTitleInput = elementsGetter('#note-title-input');
   checkTitleField(noteTitleInput);
 
-  const noteDescriptionInput = elementsGetter('#note-description');
+  const noteDescriptionInput = elementsGetter('#note-description-input');
   checkDescriptionField(noteDescriptionInput);
 
   const colorFieldset = elementsGetter('#color-fieldset');

@@ -1,4 +1,4 @@
-import BasicComponent from "../components/basicComponent/index.js";
+import BasicComponent from "../components/basicComponents/basicComponent/index.js";
 
 function getClasslist(mainClasslist, additionalClasslist) {
   if (!Array.isArray(mainClasslist)) {

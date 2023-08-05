@@ -1,4 +1,4 @@
-import { checkIsObject } from "../../utils/componentFunctions.js";
+import { checkIsObject } from "../../../utils/componentFunctions.js";
 import BasicComponent from "../basicComponent/index.js";
 
 class InputLabel extends BasicComponent {

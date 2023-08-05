@@ -1,8 +1,11 @@
-import appStorage from "../../services/appStorage.service.js";
-import { checkIsObject } from "../../utils/componentFunctions.js";
-import { loadCSS } from "../../utils/cssFunctions.js";
-import BasicComponent from "../basicComponent/index.js";
+import BasicComponent from "../basicComponents/basicComponent/index.js";
 import appDialog from "../dialog/index.js";
+
+import appStorage from "../../services/appStorage.service.js";
+import { checkIsObject, createElementsGetter } from "../../utils/componentFunctions.js";
+import { getNoteEditorFormComponent } from "../../utils/formChildren.js";
+
+import { loadCSS } from "../../utils/cssFunctions.js";
 
 loadCSS('./js/components/note/note.css');
 
@@ -41,7 +44,15 @@ class Note extends BasicComponent {
   }
 
   startNoteEditing() {
-    console.log('start edition');
+    console.log('start editing');
+    const editorInnerHTML = this.#getNoteEditorInnerHTML();
+    this._element.innerHTML = editorInnerHTML;
+    this.#makeNoteEditorInteractive(this.element);
+  }
+
+  endNoteEditing() {
+    console.log('end editing');
+    this._element.innerHTML = this.#getNoteInnerHTML();
   }
 
   updateNoteElement() {
@@ -81,6 +92,27 @@ class Note extends BasicComponent {
         </button>
       </div>
     `;
+  }
+
+  #getNoteEditorInnerHTML(formComponent) {
+    const formEditorComponent = formComponent ?? this.#getNoteFormEditorComponent();
+
+    return `
+      ${formEditorComponent.element.outerHTML}
+      <button class="note__button note__button--close-button">
+        <span class="note__button-icon note__button-icon--close material-icons" title="close note editor">close</span>
+      </button>
+    `;
+  }
+
+  #getNoteFormEditorComponent() {
+    return getNoteEditorFormComponent(this.#noteState.noteTitle, this.#noteState.noteDescription);
+  }
+
+  #makeNoteEditorInteractive(noteElement) {
+    const getElementBySelector = createElementsGetter(noteElement, {});
+    const closeButton = getElementBySelector('.note__button--close-button');
+    closeButton.addEventListener('click', () => this.endNoteEditing());
   }
 
 }

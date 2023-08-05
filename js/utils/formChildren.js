@@ -1,43 +1,59 @@
-import BasicComponent from "../basicComponent/index.js";
-import BasicInput from "../basicInput/index.js";
+import BasicComponent from "../components/basicComponents/basicComponent/index.js";
+import BasicInput from "../components/basicComponents/basicInput/index.js";
+import Fieldset from "../components/basicComponents/fieldset/index.js";
 
-import { NOTE_DESCRIPTION_REQUIREMENT, NOTE_TITLE_REQUIREMENT } from "../../constants/formValidation.constants.js";
-import { BG_NOTE_COLORS } from "../../constants/appData.constants.js";
-import Fieldset from "../fieldset/index.js";
+import { isNonEmptyString } from "./componentFunctions.js";
+
+import { NOTE_DESCRIPTION_REQUIREMENT, NOTE_TITLE_REQUIREMENT } from "../constants/formValidation.constants.js";
+import { BG_NOTE_COLORS } from "../constants/appData.constants.js";
 
 function getNoteFormChildren() {
   return [
     getFormTitleComponent(),
     getTextFieldsetComponent(),
     getColorFieldsetComponent(),
-    getSubmitButtonComponent(),
+    getSubmitButtonComponent('create-note-submit-button'),
   ]
 }
 
-function getFormTitleComponent() {
+function getNoteEditorFormComponent(titleValue, descriptionValue) {
+  const formTitle = getFormTitleComponent('Edit note');
+  const textFieldsetComponent =  getTextFieldsetComponent(titleValue, descriptionValue, false);
+  const submitButtonComponent = getSubmitButtonComponent('edit-note-submit-button');
+  const formComponent = new BasicComponent({
+    elementType: 'form',
+    basicClassNames: ['note__editor-form'],
+    children: [formTitle, textFieldsetComponent, submitButtonComponent],
+  })
+
+  return formComponent;
+}
+
+function getFormTitleComponent(title) {
   const formTitleOptions = {
     elementType: 'h2',
     basicClassNames: ['note-form-title'],
-    innerHTML: 'Please fill the note options:'
+    innerHTML: isNonEmptyString(title) ? title : 'Please fill the form:'
   };
 
   return new BasicComponent(formTitleOptions);
 }
 
-function getTextFieldsetComponent() {
+function getTextFieldsetComponent(titleValue, descriptionValue, isLabels = true) {
   const componentOptions = {
     basicClassNames: ['text-data'],
-    children: [getTitleInputComponent(), getDescriptionInputComponent()],
+    children: [getTitleInputComponent(titleValue, isLabels), getDescriptionInputComponent(descriptionValue, isLabels)],
   };
 
   return new Fieldset(componentOptions);
 }
 
-function getTitleInputComponent() {
+function getTitleInputComponent(value, islabel = true) {
   const titleInputOptions = {
     inputType: 'text',
-    id: 'note-title',
-    label: 'Title:',
+    id: islabel ? 'note-title-input' : '',
+    label: islabel ? 'Title:' : '',
+    value: isNonEmptyString(value) ? value : '',
     placeholder: 'enter a note title',
     requered: true,
     autofocus: true,
@@ -48,12 +64,13 @@ function getTitleInputComponent() {
   return new BasicInput(titleInputOptions);
 }
 
-function getDescriptionInputComponent() {
+function getDescriptionInputComponent(value, islabel = true) {
   const descriptionInputOptions = {
     isTextarea: true,
     inputType: 'text',
-    id: 'note-description',
-    label: 'Description:',
+    id: islabel ? 'note-description-input': '',
+    label: islabel ? 'Description:' : '',
+    value: isNonEmptyString(value) ? value : '',
     placeholder: 'enter a note description',
     requered: true,
     minLength: NOTE_DESCRIPTION_REQUIREMENT.MIN_LENGTH,
@@ -102,9 +119,9 @@ function getColorFieldsetComponent() {
   return new Fieldset(componentOptions);
 }
 
-function getSubmitButtonComponent() {
+function getSubmitButtonComponent(buttonId) {
   const buttonOptions = {
-    id: 'create-note-submit-button',
+    id: buttonId,
     basicClassNames: ['form-submit-button'],
     innerHTML: 'Confirm'
   }
@@ -117,5 +134,6 @@ function getSubmitButtonComponent() {
 }
 
 export {
+  getNoteEditorFormComponent,
   getNoteFormChildren,
 };

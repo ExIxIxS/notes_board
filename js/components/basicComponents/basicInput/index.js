@@ -1,7 +1,7 @@
 import { checkIsObject, isNonEmptyString } from "../../../utils/componentFunctions.js";
-import InputLabel from "../../InputLabel/index.js";
-import BasicComponent from "../../basicComponent/index.js";
-import SingleInput from "../../singleInput/index.js";
+import InputLabel from "../InputLabel/index.js";
+import BasicComponent from "../basicComponent/index.js";
+import SingleInput from "../singleInput/index.js";
 
 class BasicInput extends BasicComponent {
   constructor(inputArgsObj) {

@@ -1,11 +1,11 @@
-import appStorage from "../../services/appStorage.service.js";
+import appStorage from "../services/appStorage.service.js";
 import { checkFormForValidData, isFormValid } from "./formValidation.js";
 
 function makeNoteCreatorInteractive(elementsGetter, form, noteListComponent) {
-  const noteTitleInput = elementsGetter('#note-title');
+  const noteTitleInput = elementsGetter('#note-title-input');
   noteTitleInput.addEventListener('input', () => makeElementValid(noteTitleInput));
 
-  const noteDescriptionInput = elementsGetter('#note-description');
+  const noteDescriptionInput = elementsGetter('#note-description-input');
   noteDescriptionInput.addEventListener('input', () => makeElementValid(noteDescriptionInput));
 
   const bgColorRadioInput_1 = elementsGetter('#bg-color-option-1');
@@ -62,8 +62,8 @@ function makeElementValid(element) {
 
 function getNoteFormData(elementsGetter) {
   const noteFormData = {};
-  noteFormData.noteTitle = elementsGetter('#note-title').value;
-  noteFormData.noteDescription = elementsGetter('#note-description').value;
+  noteFormData.noteTitle = elementsGetter('#note-title-input').value;
+  noteFormData.noteDescription = elementsGetter('#note-description-input').value;
   const radioInputs = elementsGetter('#color-fieldset').querySelectorAll('input');
 
   for (let input of radioInputs) {
@@ -76,8 +76,8 @@ function getNoteFormData(elementsGetter) {
 }
 
 function clearNoteFormInputs(elementsGetter) {
-  elementsGetter('#note-title').value = '';
-  elementsGetter('#note-description').value = '';
+  elementsGetter('#note-title-input').value = '';
+  elementsGetter('#note-description-input').value = '';
   const radioInputs = elementsGetter('#color-fieldset').querySelectorAll('input');
 
   for (let input of radioInputs) {

@@ -1,10 +1,10 @@
+import BasicComponent from "../basicComponents/basicComponent/index.js";
 import { checkIsObject } from "../../utils/componentFunctions.js";
-import BasicComponent from "../basicComponent/index.js";
 
 const DEFAULT_CLASS_LIST = ['app-header'];
 
 const child = document.createElement('p');
-child.innerHTML = 'Cool!!!'
+child.innerHTML = 'Cool Header!!!'
 
 class Header extends BasicComponent {
   constructor(argsObj = {}) {

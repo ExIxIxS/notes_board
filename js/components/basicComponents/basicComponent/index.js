@@ -3,7 +3,7 @@ import {
   checkIsObject,
   getClasslist,
   isNonEmptyString
-} from "../../utils/componentFunctions.js";
+} from "../../../utils/componentFunctions.js";
 
 /*
 {

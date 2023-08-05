@@ -3,6 +3,7 @@
   max-width: 500px;
   min-width: 300px;
   padding: 10px;
+  position: relative;
   display: flex;
   justify-content: space-between;
   background-color: aliceblue;
@@ -29,6 +30,12 @@
   border-radius: 50%;
 }
 
+.note .note__button--close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
 .note .note__text-content {
   padding: 6px 20px 6px 10px;
   display: flex;
@@ -36,7 +43,7 @@
   flex-grow: 2;
 }
 
-.note .note__title {
+.note .note__title, .note-form-title {
   font-size: 28px;
   margin: 10px 0;
   align-self: center;
@@ -50,4 +57,28 @@
 .note .note__date {
   margin: 0;
   align-self: flex-end;
+}
+
+.note .note__editor-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 2;
+}
+
+.note .text-data, .basic-form-input, .form-input {
+  width: 100%;
+}
+
+.note .form-submit-button {
+  max-width: 110px;
+  height: auto;
+  margin: 0;
+  padding: 4px 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  font-size: 20px;
 }

@@ -1,7 +1,8 @@
-import appStorage from "../../services/appStorage.service.js";
-import { loadCSS } from "../../utils/cssFunctions.js";
-import BasicComponent from "../basicComponent/index.js";
+import BasicComponent from "../basicComponents/basicComponent/index.js";
 import Note from "../note/index.js";
+import appStorage from "../../services/appStorage.service.js";
+
+import { loadCSS } from "../../utils/cssFunctions.js";
 
 loadCSS('./js/components/noteList/noteList.css');
 
