@@ -26,7 +26,9 @@ class NoteList extends BasicComponent {
 
     super({
       elementType: 'div',
-      basicClassNames: ['note-list'],
+      basicClassNames: isFavoritesList
+        ? ['note-list', 'note-list--favorites']
+        : ['note-list'],
       children: favoriteFilteredNotes,
     });
 
