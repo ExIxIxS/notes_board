@@ -6,12 +6,9 @@ import { checkIsObject, createElementsGetter } from "../../utils/componentFuncti
 import { getNoteEditorFormComponent } from "../../utils/formChildren.js";
 import { getNoteDateString } from "../../utils/dateHandling.js";
 
-import { loadCSS } from "../../utils/cssFunctions.js";
 import { makeElementValid } from "../../utils/formInteractive.js";
 import { checkDescriptionField, checkTitleField, isFormValid } from "../../utils/formValidation.js";
 import { getBgColorClass } from "../../utils/styleHandling.js";
-
-loadCSS('./js/components/note/note.css');
 
 /*
 bgColor:"green"

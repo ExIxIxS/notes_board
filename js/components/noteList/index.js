@@ -1,11 +1,8 @@
 import BasicComponent from "../basicComponents/basicComponent/index.js";
 import Note from "../note/index.js";
+
 import appStorage from "../../services/appStorage.service.js";
-
-import { loadCSS } from "../../utils/cssFunctions.js";
 import { isNonEmptyString } from "../../utils/componentFunctions.js";
-
-loadCSS('./js/components/noteList/noteList.css');
 
 /*
 bgColor:"green"

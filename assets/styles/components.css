@@ -1,0 +1,242 @@
+:root {
+  --color-background-default: #f0f8ff;
+  --color-background-main-1: #e7cfaa;
+  --color-background-main-2: #f9f3ee;
+  --color-background-main-3: #ffffff;
+  --color-background-popup-1: #e7cfaab7;
+  --color-background-disabled-1: #ececec;
+  --color-invalid: #ff0000;
+  --color-main-font-1: #d9aa63;
+  --color-main-font-2: #2b1811;
+}
+
+/* --- Dialog --- */
+
+.dialog {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  background-color: rgba(170, 170, 170, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.dialog.dialog--closed {
+  display: none;
+}
+
+.dialog .dialog__window {
+  width: 500px;
+  height: 500px;
+  background-color: bisque;
+  border: 2px solid rgb(201, 115, 10);
+  border-radius: 10px;
+}
+
+/* --- Nav Panel --- */
+
+/* --- Nav Button --- */
+
+/* --- Search Panel --- */
+
+/* --- Note--- */
+
+.note {
+  width: 100%;
+  max-width: 500px;
+  min-width: 280px;
+  padding: 10px;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--color-background-default);
+  border-radius: 16px;
+}
+
+.note.bg-color-ff99c8 {
+  background-color: #ffe5f1;
+  color: #7f7100;
+}
+
+.note.bg-color-fcf6bd {
+  background-color: #fffde6;
+  color: #017915;
+}
+
+.note.bg-color-d0f4de {
+  background-color: #e5ffee;
+  color: #de468a;
+}
+
+.note.bg-color-a9def9 {
+  background-color: #a6defc;
+  color: #372697;
+}
+
+.note.bg-color-e4c1f9 {
+  background-color: #db99ff;
+  color: #1b2fa8;
+}
+
+.note .note__buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.note .note__button {
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+  border: 1px solid;
+  border-color: inherit;
+  border-radius: 50%;
+}
+
+.note .note__button--close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.note .note__text-content {
+  padding: 6px 20px 6px 10px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 2;
+}
+
+.note .note__title, .note-form-title {
+  font-size: 28px;
+  margin: 10px 0;
+  align-self: center;
+}
+
+.note .note__description {
+  max-width: 400px;
+  font-size: 22px;
+  margin: 6px 0;
+  overflow: hidden;
+}
+
+.note .note__date {
+  margin: 0;
+  align-self: flex-end;
+}
+
+.note .note__editor-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 2;
+}
+
+.note .text-data, .basic-form-input, .form-input {
+  width: 100%;
+}
+
+.note .form-submit-button {
+  max-width: 110px;
+  height: auto;
+  margin: 0;
+  padding: 4px 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  font-size: 20px;
+}
+
+@media (max-width: 532px) {
+  .note .note__description {
+    max-width: 206px;
+  }
+
+}
+
+/* --- Note creator --- */
+
+.note-creator-form {
+  width: 100%;
+  max-width: 590px;
+  padding: 10px 40px;
+  background-color: whitesmoke;
+  border-radius: 30px;
+}
+
+.note-creator-form .basic-form-input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.note-creator-form .color-data {
+  display: flex;
+  flex-direction: row;
+  padding: 10px 2px;
+  justify-content: space-evenly;
+}
+
+.note-creator-form .color-data .basic-form-input {
+  width: auto;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  text-align: center;
+}
+
+.note-creator-form .form-submit-button {
+  width: 130px;
+  height: 39px;
+  margin: 10px;
+  align-self: center;
+}
+
+@media (max-width: 756px) {
+  .note-creator-form {
+    padding: 10px;
+  }
+
+  .note-creator-form .text-data .form-label {
+    display: none;
+  }
+
+}
+
+/* --- NoteList --- */
+
+.note-list {
+  width: 100%;
+  max-width: 516px;
+  max-height: 500px;
+  overflow: auto;
+  margin: 10px 0;
+  padding: 0 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 16px;
+}
+
+/* --- Footer --- */
+
+.footer__github-logo {
+  width: 45px;
+  height: 45px;
+  fill: var(--color-main-font-1);
+  padding: 0;
+  margin: 0;
+  vertical-align: middle;
+}

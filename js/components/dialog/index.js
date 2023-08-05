@@ -1,10 +1,6 @@
 import BasicComponent from "../basicComponents/basicComponent/index.js";
 import { isNonEmptyString } from "../../utils/componentFunctions.js";
 
-import { loadCSS } from "../../utils/cssFunctions.js";
-
-loadCSS('./js/components/dialog/dialog.css');
-
 class Dialog extends BasicComponent {
   #currentConfirmCallback;
 
