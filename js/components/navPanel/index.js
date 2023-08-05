@@ -43,11 +43,11 @@ class NavButton extends BasicComponent {
     this.element.href = link;
 
     this.element.innerHTML = `
-      <button type="button" ${argsObj.isDisabled ? 'disabled' : ''}>
-        ${isNonEmptyString(argsObj.title)
+      <button type="button" ${argsObj.isDisabled ? 'disabled' : ''}>${
+        isNonEmptyString(argsObj.title)
           ? argsObj.title
-          : `${link}`}
-      </button>
+          : `${link}`
+      }</button>
     `
   }
 }

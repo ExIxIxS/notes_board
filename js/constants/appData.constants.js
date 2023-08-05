@@ -1,9 +1,9 @@
 const bgNoteColors = [
-  { colorCode: 'FF99C8', alias: '1'},
-  { colorCode: 'FCF6BD', alias: '2'},
-  { colorCode: 'D0F4DE', alias: '3'},
-  { colorCode: 'A9DEF9', alias: '4'},
-  { colorCode: 'E4C1F9', alias: '5'},
+  { colorCode: '2a599d', alias: 'Endeavour'},
+  { colorCode: 'de2626', alias: 'Persian Red'},
+  { colorCode: 'eeb9d7', alias: 'Lavender Pink'},
+  { colorCode: '9ac157', alias: 'Olivine'},
+  { colorCode: '62b7e0', alias: 'Malibu'},
 ]
 
 bgNoteColors.forEach((bgColor) => {
