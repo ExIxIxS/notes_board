@@ -3,6 +3,7 @@ import Note from "../note/index.js";
 import appStorage from "../../services/appStorage.service.js";
 
 import { loadCSS } from "../../utils/cssFunctions.js";
+import { isNonEmptyString } from "../../utils/componentFunctions.js";
 
 loadCSS('./js/components/noteList/noteList.css');
 
@@ -17,8 +18,8 @@ noteTitle: "Johcn"
 */
 
 class NoteList extends BasicComponent {
-  constructor() {
-    const notes = appStorage.getNoteComponents();
+  constructor(noteComponents) {
+    const notes = noteComponents ?? appStorage.getNoteComponents();
 
     super({
       elementType: 'div',
@@ -75,6 +76,21 @@ class NoteList extends BasicComponent {
     }
   }
 
+  filterNotes(query) {
+    const noteComponents = appStorage.getNoteComponents();
+
+    if (isNonEmptyString(query)) {
+      const filteredNoteComponents = noteComponents
+        .filter((noteComponent) => {
+          const noteTitle = noteComponent.noteState.noteTitle.toLowerCase();
+          return noteTitle.includes(query.toLowerCase());
+        });
+      this.updateNoteList(filteredNoteComponents);
+    } else {
+      this.updateNoteList(noteComponents);
+    }
+  }
+
   closeAllNoteEditors() {
     this.noteListChildren.forEach((noteComponent) => {
       if (noteComponent.isEditorOpen) {
@@ -83,14 +99,16 @@ class NoteList extends BasicComponent {
     })
   }
 
-  updateNoteList() {
-    console.log('Update list');
-    const newElementChildren = new NoteList()
-      .element
-      .querySelectorAll('.note');
+  updateNoteList(noteComponents) {
+    const newNoteList = new NoteList(noteComponents);
+    const newNoteElements = newNoteList.element.querySelectorAll('.note');
+
+    if (noteComponents) {
+      this.noteListChildren = noteComponents;
+    }
 
     this.element.innerHTML = '';
-    this.element.append(...newElementChildren)
+    this.element.append(...newNoteElements);
   }
 
   addNoteToList(storageNoteData) {
