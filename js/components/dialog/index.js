@@ -70,8 +70,8 @@ function getDialogInnerHTML(message) {
         <p class="note_description">${isNonEmptyString(message) ? message : 'Are you sure?'}</p>
       </div>
       <div class="dialog__buttons">
-        <button class="dialog__submit-button">Confirm</button>
-        <button class="dialog__close-button">Cancel</button>
+        <button class="dialog__submit-button">Yes</button>
+        <button class="dialog__close-button">No</button>
       </div>
     </div>
   `;

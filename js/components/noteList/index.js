@@ -1,6 +1,9 @@
 import appStorage from "../../services/appStorage.service.js";
+import { loadCSS } from "../../utils/cssFunctions.js";
 import BasicComponent from "../basicComponent/index.js";
 import Note from "../note/index.js";
+
+loadCSS('./js/components/noteList/noteList.css');
 
 /*
 bgColor:"green"
@@ -29,15 +32,16 @@ class NoteList extends BasicComponent {
   handleNoteListClick(e) {
     const target = e.target;
     const targetClassList = e.target.classList;
+
+    if (!targetClassList.contains('note__button')
+      && !targetClassList.contains('note__button-icon')) {
+        return;
+      }
+
     switch(true) {
-      case (targetClassList.contains('note_favorite-button')
-        || targetClassList.contains('note_favorite-button-icon')): {
-
-        const buttonElement = (targetClassList.contains('note_favorite-button'))
-          ? target
-          : target.parentElement;
-
-        const noteComponent = this.getNoteComponentByButton(buttonElement);
+      case (targetClassList.contains('note__button--favorite-button')):
+      case (targetClassList.contains('note__button-icon--favorite')): {
+        const noteComponent = this.getNoteComponentByButtonOrChild(target);
 
         if (noteComponent) {
           noteComponent.toggleFavorite();
@@ -45,8 +49,9 @@ class NoteList extends BasicComponent {
 
         break;
       }
-      case (targetClassList.contains('note_edit-button')): {
-        const noteComponent = this.getNoteComponentByButton(target);
+      case (targetClassList.contains('note__button--edit-button')):
+      case (targetClassList.contains('note__button-icon--edit')): {
+        const noteComponent = this.getNoteComponentByButtonOrChild(target);
 
         if (noteComponent) {
           noteComponent.startNoteEditing();
@@ -54,8 +59,9 @@ class NoteList extends BasicComponent {
 
         break;
       }
-      case (targetClassList.contains('note_delete-button')): {
-        const noteComponent = this.getNoteComponentByButton(target);
+      case (targetClassList.contains('note__button--delete-button')):
+      case (targetClassList.contains('note__button-icon--delete')): {
+        const noteComponent = this.getNoteComponentByButtonOrChild(target);
 
         if (noteComponent) {
           noteComponent.deleteNote(() => this.deleteNoteFromList(noteComponent));
@@ -108,6 +114,15 @@ class NoteList extends BasicComponent {
   getNoteComponentByButton(buttonElement) {
     const noteId = getNoteByButton(buttonElement).id;
     return this.getNoteComponentById(noteId);
+  }
+
+  getNoteComponentByButtonOrChild(element) {
+    const classList = element.classList;
+    const buttonElement = (classList.contains('note__button'))
+    ? element
+    : element.parentElement;
+
+    return this.getNoteComponentByButton(buttonElement);
   }
 
 }

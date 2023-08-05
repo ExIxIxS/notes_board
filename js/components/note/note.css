@@ -1,0 +1,53 @@
+.note {
+  width: 100%;
+  max-width: 500px;
+  min-width: 300px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  background-color: aliceblue;
+  border-radius: 16px;
+}
+
+.note .note__buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.note .note__button {
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #f09628;
+  background-color: #ffffff;
+  border: 1px solid #f09628;
+  border-radius: 50%;
+}
+
+.note .note__text-content {
+  padding: 6px 20px 6px 10px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 2;
+}
+
+.note .note__title {
+  font-size: 28px;
+  margin: 10px 0;
+  align-self: center;
+}
+
+.note .note__description {
+  font-size: 22px;
+  margin: 6px 0;
+}
+
+.note .note__date {
+  margin: 0;
+  align-self: flex-end;
+}

@@ -1,7 +1,10 @@
 import appStorage from "../../services/appStorage.service.js";
 import { checkIsObject } from "../../utils/componentFunctions.js";
+import { loadCSS } from "../../utils/cssFunctions.js";
 import BasicComponent from "../basicComponent/index.js";
 import appDialog from "../dialog/index.js";
+
+loadCSS('./js/components/note/note.css');
 
 /*
 bgColor:"green"
@@ -14,7 +17,7 @@ noteTitle: "Johcn"
 */
 
 class Note extends BasicComponent {
-  #noteArgs;
+  #noteState;
 
   constructor(noteArgsObj) {
     checkIsObject(noteArgsObj);
@@ -24,16 +27,16 @@ class Note extends BasicComponent {
       id: noteArgsObj.noteId,
       basicClassNames: ['note'],
       additionlClassNames: [noteArgsObj.bgColor],
-      innerHTML: getNoteInnerHTML(noteArgsObj),
     });
 
-    this.#noteArgs = noteArgsObj;
+    this.#noteState = noteArgsObj;
+    this._element.innerHTML = this.#getNoteInnerHTML();
   }
 
   toggleFavorite() {
-    this.#noteArgs.isFavorite = !this.#noteArgs.isFavorite;
+    this.#noteState.isFavorite = !this.#noteState.isFavorite;
 
-    appStorage.updateNote(this.#noteArgs);
+    appStorage.updateNote(this.#noteState);
     this.updateNoteElement();
   }
 
@@ -42,13 +45,13 @@ class Note extends BasicComponent {
   }
 
   updateNoteElement() {
-    this.element.innerHTML = getNoteInnerHTML(this.#noteArgs);
+    this.element.innerHTML = this.#getNoteInnerHTML();
   }
 
   deleteNote(outerCallback) {
-    const message = `Are you sure, want to delete this note: "${this.#noteArgs.noteTitle}"?`;
+    const message = `Are you sure, want to delete this note: "${this.#noteState.noteTitle}"?`;
     const deleteCallback = () => {
-      appStorage.deleteNote(this.#noteArgs.noteId);
+      appStorage.deleteNote(this.#noteState.noteId);
       this.element.remove();
       outerCallback();
     };
@@ -56,26 +59,30 @@ class Note extends BasicComponent {
     appDialog.openDialog(message, deleteCallback);
   }
 
-}
+  #getNoteInnerHTML() {
+    return `
+      <div class="note__text-content">
+        <h3 class="note__title">${this.#noteState.noteTitle}</h3>
+        <p class="note__description">${this.#noteState.noteDescription}</p>
+        <p class="note__date">${this.#noteState.date} ${this.#noteState.isUpdated ? 'Updated' : ''}</p>
+      </div>
+      <div class="note__buttons">
+        <button class="note__button note__button--favorite-button">
+          ${this.#noteState.isFavorite
+            ? '<span class="note__button-icon note__button-icon--favorite material-icons" title="remove from favorites">star</span>'
+            : '<span class="note__button-icon note__button-icon--favorite material-icons" title="add to favorites">star_outline</span>'
+          }
+        </button>
+        <button class="note__button note__button--edit-button">
+          <span class="note__button-icon note__button-icon--edit material-icons" title="edit note">edit</span>
+        </button>
+        <button class="note__button note__button--delete-button">
+          <span class="note__button-icon note__button-icon--delete material-icons" title="edit note">delete_forever</span>
+        </button>
+      </div>
+    `;
+  }
 
-function getNoteInnerHTML(noteArgsObj) {
-  return `
-    <div class="note_text-content">
-      <h2 class="note_title">${noteArgsObj.noteTitle}</h2>
-      <p class="note_description">${noteArgsObj.noteDescription}</p>
-      <p class="note_date">${noteArgsObj.date} ${noteArgsObj.isUpdated ? 'Updated' : ''}</p>
-    </div>
-    <div class="note_buttons">
-      <button class="note_favorite-button">
-        ${noteArgsObj.isFavorite
-          ? '<span class="note_favorite-button-icon material-icons star" title="remove from favorite">star</span>'
-          : '<span class="note_favorite-button-icon material-icons star_outline" title="add to favorite">star_outline</span>'
-        }
-      </button>
-      <button class="note_edit-button">Edit</button>
-      <button class="note_delete-button">Delete</button>
-    </div>
-  `;
 }
 
 export default Note;
