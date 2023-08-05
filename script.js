@@ -1,3 +1,4 @@
+import appDialog from "./js/components/dialog/index.js";
 import Header from "./js/components/header/index.js";
 import NoteCreatorForm from "./js/components/noteCreatorForm/index.js";
 import NoteList from "./js/components/noteList/index.js";
@@ -7,6 +8,7 @@ const noteCreator = new NoteCreatorForm();
 const noteList = new NoteList();
 
 const mainPageLayout = [
+  appDialog,
   header,
   noteCreator,
   noteList,

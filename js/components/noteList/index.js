@@ -57,7 +57,12 @@ class NoteList extends BasicComponent {
         break;
       }
       case (targetClassList.contains('note_delete-button')): {
-        console.log('delete note');
+        const noteComponent = this.getNoteComponentByButton(target);
+
+        if (noteComponent) {
+          noteComponent.deleteNote();
+        }
+
         break;
       }
 

@@ -28,16 +28,29 @@ class AppStorage {
   }
 
   updateNote(updatedStorageNote) {
-    const currentNoteList = this.storageNotelist;
-    const noteIndex = currentNoteList
-      .findIndex((storageNote) => storageNote.noteId === updatedStorageNote.noteId);
-
+    const noteIndex = this.#findNoteIndexById(updatedStorageNote.noteId);
 
     if (noteIndex >=0) {
+      const currentNoteList = this.storageNotelist;
       currentNoteList[noteIndex] = updatedStorageNote;
       this.#setStorageNoteList(currentNoteList);
-      console.log(this.storageNotelist);
     }
+  }
+
+  deleteNote(noteId) {
+    const noteIndex = this.#findNoteIndexById(noteId);
+
+    if (noteIndex >=0) {
+      const currentNoteList = this.storageNotelist;
+
+      currentNoteList.splice([noteIndex], 1);
+      this.#setStorageNoteList(currentNoteList);
+    }
+  }
+
+  #findNoteIndexById(noteId) {
+    return this.storageNotelist
+      .findIndex((storageNote) => storageNote.noteId === noteId);
   }
 
   #setStorageNoteList(storageNoteList) {
