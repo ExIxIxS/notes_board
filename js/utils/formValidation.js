@@ -55,14 +55,15 @@ function checkFormForValidData(elementsGetter) {
   checkColorFieldset(colorFieldset);
 }
 
-function isFormValid(formElement) {
+function isFormValid(formElement, requiredValidInputsAmount) {
   const validCollection = formElement.querySelectorAll('.valid');
-  const requiredValidInputsAmount = 3;
 
   return (validCollection.length === requiredValidInputsAmount);
 }
 
 export {
+  checkTitleField,
+  checkDescriptionField,
   checkFormForValidData,
   isFormValid,
   checkColorFieldset,

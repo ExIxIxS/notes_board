@@ -4,8 +4,11 @@ import appDialog from "../dialog/index.js";
 import appStorage from "../../services/appStorage.service.js";
 import { checkIsObject, createElementsGetter } from "../../utils/componentFunctions.js";
 import { getNoteEditorFormComponent } from "../../utils/formChildren.js";
+import { getNoteDateString } from "../../utils/dateHandling.js";
 
 import { loadCSS } from "../../utils/cssFunctions.js";
+import { makeElementValid } from "../../utils/formInteractive.js";
+import { checkDescriptionField, checkTitleField, isFormValid } from "../../utils/formValidation.js";
 
 loadCSS('./js/components/note/note.css');
 
@@ -21,6 +24,7 @@ noteTitle: "Johcn"
 
 class Note extends BasicComponent {
   #noteState;
+  #isEditorOpen = false;
 
   constructor(noteArgsObj) {
     checkIsObject(noteArgsObj);
@@ -36,6 +40,14 @@ class Note extends BasicComponent {
     this._element.innerHTML = this.#getNoteInnerHTML();
   }
 
+  get noteState() {
+    return this.#noteState;
+  }
+
+  get isEditorOpen() {
+    return this.#isEditorOpen;
+  }
+
   toggleFavorite() {
     this.#noteState.isFavorite = !this.#noteState.isFavorite;
 
@@ -44,15 +56,14 @@ class Note extends BasicComponent {
   }
 
   startNoteEditing() {
-    console.log('start editing');
-    const editorInnerHTML = this.#getNoteEditorInnerHTML();
-    this._element.innerHTML = editorInnerHTML;
+    this.#isEditorOpen = true;
+    this._element.innerHTML = this.#getNoteEditorInnerHTML();
     this.#makeNoteEditorInteractive(this.element);
   }
 
   endNoteEditing() {
-    console.log('end editing');
-    this._element.innerHTML = this.#getNoteInnerHTML();
+    this.updateNoteElement();
+    this.#isEditorOpen = false;
   }
 
   updateNoteElement() {
@@ -70,12 +81,22 @@ class Note extends BasicComponent {
     appDialog.openDialog(message, deleteCallback);
   }
 
+  updateNoteState(newState, isDateUpdateNeeded = false) {
+    const newNoteState = {...this.#noteState, ...newState};
+
+    this.#noteState = isDateUpdateNeeded
+      ? {...newNoteState, isUpdated: true, date: getNoteDateString()}
+      : newNoteState;
+
+    appStorage.updateNote(this.#noteState);
+  }
+
   #getNoteInnerHTML() {
     return `
       <div class="note__text-content">
         <h3 class="note__title">${this.#noteState.noteTitle}</h3>
         <p class="note__description">${this.#noteState.noteDescription}</p>
-        <p class="note__date">${this.#noteState.date} ${this.#noteState.isUpdated ? 'Updated' : ''}</p>
+        <p class="note__date">${this.#noteState.isUpdated ? 'Updated: ' : ''} ${this.#noteState.date} </p>
       </div>
       <div class="note__buttons">
         <button class="note__button note__button--favorite-button">
@@ -88,7 +109,7 @@ class Note extends BasicComponent {
           <span class="note__button-icon note__button-icon--edit material-icons" title="edit note">edit</span>
         </button>
         <button class="note__button note__button--delete-button">
-          <span class="note__button-icon note__button-icon--delete material-icons" title="edit note">delete_forever</span>
+          <span class="note__button-icon note__button-icon--delete material-icons" title="delete note">delete_forever</span>
         </button>
       </div>
     `;
@@ -111,10 +132,49 @@ class Note extends BasicComponent {
 
   #makeNoteEditorInteractive(noteElement) {
     const getElementBySelector = createElementsGetter(noteElement, {});
+    const form = getElementBySelector('.note__editor-form');
+    const titleInput = getElementBySelector('.note-title-input');
+    const descriptionInput = getElementBySelector('.note-description-input');
+    const submitButton = getElementBySelector('.form-submit-button');
     const closeButton = getElementBySelector('.note__button--close-button');
+
+    titleInput.addEventListener('input', () => makeElementValid(titleInput));
+    descriptionInput.addEventListener('input', () => makeElementValid(titleInput));
     closeButton.addEventListener('click', () => this.endNoteEditing());
+    submitButton.addEventListener('click', () => handleNoteEditorSubmitClick(this, form, titleInput, descriptionInput));
+
+    form.addEventListener('submit', (e) => e.preventDefault());
+    form.addEventListener('reset', (e) => e.preventDefault());
   }
 
+}
+
+function handleNoteEditorSubmitClick(noteComponent, form, titleInput, descriptionInput) {
+  checkNoteEditorForValidData(titleInput, descriptionInput);
+  const validInputsAmount = 2;
+
+  if (isFormValid(form, validInputsAmount)) {
+    submitNoteEditorForm(noteComponent, titleInput, descriptionInput);
+  }
+}
+
+function checkNoteEditorForValidData(noteTitleInput, noteDescriptionInput) {
+  checkTitleField(noteTitleInput);
+  checkDescriptionField(noteDescriptionInput);
+}
+
+function submitNoteEditorForm(noteComponent, titleInput, descriptionInput) {
+  const noteEditorFormData = getNoteEditorFormData(titleInput, descriptionInput);
+
+  noteComponent.updateNoteState(noteEditorFormData, true);
+  noteComponent.endNoteEditing();
+}
+
+function getNoteEditorFormData(noteTitleInput, noteDescriptionInput) {
+  return {
+    noteTitle: noteTitleInput.value,
+    noteDescription: noteDescriptionInput.value,
+  };
 }
 
 export default Note;

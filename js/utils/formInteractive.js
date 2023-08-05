@@ -17,12 +17,8 @@ function makeNoteCreatorInteractive(elementsGetter, form, noteListComponent) {
   const submitButton = elementsGetter('#create-note-submit-button');
   submitButton.addEventListener('click', () => handleSubmitClick(elementsGetter,form, noteListComponent));
 
-
-  form.addEventListener('submit', (event) => {
-    event.preventDefault;
-    handleSubmitClick(elementsGetter, form, noteListComponent);
-  });
-  form.addEventListener('reset', resetForm);
+  form.addEventListener('submit', (event) => event.preventDefault());
+  form.addEventListener('reset', (event) => event.preventDefault());
 }
 
 function submitForm(elementsGetter, noteListComponent) {
@@ -32,16 +28,13 @@ function submitForm(elementsGetter, noteListComponent) {
   const storageNote = appStorage.createStorageNote(noteFormData)
   appStorage.addNote(storageNote);
   noteListComponent.addNoteToList(storageNote);
-
-}
-
-function resetForm(event) {
-  event.preventDefault();
 }
 
 function handleSubmitClick(elementsGetter, form, noteListComponent) {
   checkFormForValidData(elementsGetter);
-  if (isFormValid(form)) {
+  const validInputsNumber = 3;
+
+  if (isFormValid(form, validInputsNumber )) {
     submitForm(elementsGetter, noteListComponent);
   }
 }

@@ -55,6 +55,7 @@ class NoteList extends BasicComponent {
         const noteComponent = this.getNoteComponentByButtonOrChild(target);
 
         if (noteComponent) {
+          this.closeAllNoteEditors();
           noteComponent.startNoteEditing();
         }
 
@@ -72,6 +73,14 @@ class NoteList extends BasicComponent {
       }
 
     }
+  }
+
+  closeAllNoteEditors() {
+    this.noteListChildren.forEach((noteComponent) => {
+      if (noteComponent.isEditorOpen) {
+        noteComponent.endNoteEditing();
+      }
+    })
   }
 
   updateNoteList() {

@@ -1,4 +1,6 @@
-function getNoteDateString(date) {
+function getNoteDateString(dateObj) {
+  const date = (dateObj instanceof Date) ? dateObj : new Date();
+
   const hours = date.getHours();
   const minutes = getTwoCharsWithZero(date.getMinutes());
   const days = getTwoCharsWithZero(date.getDate());

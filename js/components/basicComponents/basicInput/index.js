@@ -21,7 +21,9 @@ class BasicInput extends BasicComponent {
 
     const input = new SingleInput({
       ...inputArgsObj,
-      basicClassNames: ['form-input'],
+      basicClassNames: Array.isArray(inputArgsObj.basicClassNames)
+        ? ['form-input', ...inputArgsObj.basicClassNames]
+        : ['form-input'],
     });
 
     children.push(input);

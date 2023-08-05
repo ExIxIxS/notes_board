@@ -19,12 +19,14 @@ function getNoteFormChildren() {
 function getNoteEditorFormComponent(titleValue, descriptionValue) {
   const formTitle = getFormTitleComponent('Edit note');
   const textFieldsetComponent =  getTextFieldsetComponent(titleValue, descriptionValue, false);
-  const submitButtonComponent = getSubmitButtonComponent('edit-note-submit-button');
+  const submitButtonComponent = getSubmitButtonComponent();
   const formComponent = new BasicComponent({
     elementType: 'form',
     basicClassNames: ['note__editor-form'],
     children: [formTitle, textFieldsetComponent, submitButtonComponent],
-  })
+  });
+
+  formComponent._element.method = 'post';
 
   return formComponent;
 }
@@ -50,8 +52,9 @@ function getTextFieldsetComponent(titleValue, descriptionValue, isLabels = true)
 
 function getTitleInputComponent(value, islabel = true) {
   const titleInputOptions = {
-    inputType: 'text',
     id: islabel ? 'note-title-input' : '',
+    basicClassNames: ['note-title-input'],
+    inputType: 'text',
     label: islabel ? 'Title:' : '',
     value: isNonEmptyString(value) ? value : '',
     placeholder: 'enter a note title',
@@ -66,9 +69,10 @@ function getTitleInputComponent(value, islabel = true) {
 
 function getDescriptionInputComponent(value, islabel = true) {
   const descriptionInputOptions = {
+    id: islabel ? 'note-description-input': '',
+    basicClassNames: ['note-description-input'],
     isTextarea: true,
     inputType: 'text',
-    id: islabel ? 'note-description-input': '',
     label: islabel ? 'Description:' : '',
     value: isNonEmptyString(value) ? value : '',
     placeholder: 'enter a note description',
@@ -121,14 +125,15 @@ function getColorFieldsetComponent() {
 
 function getSubmitButtonComponent(buttonId) {
   const buttonOptions = {
-    id: buttonId,
+    elementType: 'button',
+    id: buttonId ?? '',
     basicClassNames: ['form-submit-button'],
     innerHTML: 'Confirm'
   }
 
   const button = new BasicComponent(buttonOptions);
-  button.type = 'submit';
-  button.title = 'Please check and fill required fields';
+  button.element.type = buttonId ? 'submit' : 'button';
+  button.element.title = buttonId ? 'Please check and fill required fields' : '';
 
   return button;
 }

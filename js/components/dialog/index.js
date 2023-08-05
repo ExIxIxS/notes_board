@@ -44,7 +44,7 @@ class Dialog extends BasicComponent {
       ? confirmCallback
       : null;
 
-    this.element.innerHTML = getDialogInnerHTML(message);
+    this.element.innerHTML = this.#getDialogInnerHTML(message);
     this.element.classList.remove('dialog--closed');
   }
 
@@ -62,20 +62,20 @@ class Dialog extends BasicComponent {
     this.closeDialog();
   }
 
+  #getDialogInnerHTML(message) {
+    return `
+      <div class="dialog__window">
+        <div class="dialog__content">
+          <p class="note_description">${isNonEmptyString(message) ? message : 'Are you sure?'}</p>
+        </div>
+        <div class="dialog__buttons">
+          <button class="dialog__submit-button">Yes</button>
+          <button class="dialog__close-button">No</button>
+        </div>
+      </div>
+    `;
 }
 
-function getDialogInnerHTML(message) {
-  return `
-    <div class="dialog__window">
-      <div class="dialog__content">
-        <p class="note_description">${isNonEmptyString(message) ? message : 'Are you sure?'}</p>
-      </div>
-      <div class="dialog__buttons">
-        <button class="dialog__submit-button">Yes</button>
-        <button class="dialog__close-button">No</button>
-      </div>
-    </div>
-  `;
 }
 
 const appDialog = new Dialog();
