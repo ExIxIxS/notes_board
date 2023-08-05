@@ -112,7 +112,6 @@
 
 .app-header {
   width: 100%;
-  margin-bottom: 10px;
   padding: 14px;
   position: sticky;
   top: 0;
@@ -351,7 +350,7 @@
 
 @media (max-width: 532px) {
   .note .note__description {
-    max-width: 206px;
+    max-width: 400px;
   }
 
 }
@@ -396,7 +395,7 @@
   padding: 10px 40px;
   color: var(--color-font-main-2);
   background-color: var(--color-background-main-3);
-  border-radius: 30px;
+  border-radius: 0 0 30px 30px;
 }
 
 .note-creator-form .basic-form-input {

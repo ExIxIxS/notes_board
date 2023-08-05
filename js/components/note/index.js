@@ -6,8 +6,8 @@ import appStorage from "../../services/appStorage.service.js";
 import { checkIsObject, createElementsGetter } from "../../utils/componentFunctions.js";
 import { getNoteEditorFormComponent } from "../../utils/formChildren.js";
 import { getNoteDateString } from "../../utils/dateHandling.js";
-import { makeElementValid } from "../../utils/formInteractive.js";
-import { checkDescriptionField, checkTitleField, isFormValid } from "../../utils/formValidation.js";
+import { handleNoteEditorSubmitClick, makeElementValid } from "../../utils/formInteractive.js";
+
 import { getBgColorClass } from "../../utils/styleHandling.js";
 
 class Note extends BasicComponent {
