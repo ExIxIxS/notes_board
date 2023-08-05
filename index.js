@@ -1,60 +1,148 @@
-function getDistance(...coords) {
-  function throwError() {
+function makeDeepCopy(originalObj) {
+  if (!originalObj || typeof(originalObj) !== 'object' || Array.isArray(originalObj)) {
     throw new Error();
   }
 
-  function isValidCoord(coord) {
-    return (typeof(coord) === 'number' && coord >= -1000 && coord <= 1000)
+  return recursiveDeepCopy(originalObj);
+}
+
+function recursiveDeepCopy(original) {
+  if (!original || typeof(original) !== 'object') {
+    return original;
   }
 
-  if (coords.length !== 4) {
-    throwError();
+  if (Array.isArray(original)) {
+     return original.map((item) => recursiveDeepCopy(item));
   }
 
-  coords.forEach((coord) => {
-    if (!isValidCoord(coord)) {
-      throwError();
+  if (original instanceof Map) {
+    const mapCopy = new Map();
+    original.forEach((value, key) => {
+      mapCopy.set(recursiveDeepCopy(key), recursiveDeepCopy(value));
+    });
+
+    return mapCopy;
+  }
+
+  if (original instanceof Set) {
+    const setCopy = new Set();
+    original.forEach((value) => {
+      setCopy.add(recursiveDeepCopy(value));
+    });
+
+    return setCopy;
+  }
+
+  const deepObjCopy = {};
+  for (let key in original) {
+    deepObjCopy[key] = recursiveDeepCopy(original[key]);
+  }
+
+  return deepObjCopy;
+}
+
+function createIterable(...limitArgs) {
+  if (limitArgs.length !== 2) {
+    throw new Error();
+  }
+
+  limitArgs.forEach((limit) => {
+    if (!Number.isInteger(limit)) {
+      throw new Error();
     }
-  });
+  })
 
-  const [x1, y1, x2, y2] = coords;
-  const TRIM_LIMIT = 2;
-  const calcDistance = ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5;
-  const trimmedDistance = +calcDistance.toFixed(TRIM_LIMIT);
+  const [from, to] = limitArgs;
 
-  return trimmedDistance;
-}
-
-function switchPlaces(inputArr) {
-  if (!Array.isArray(inputArr)) {
+  if (to <= from) {
     throw new Error();
   }
 
-  if (!inputArr.length) {
-    return [];
-  }
+  const iterableObj = {};
+  iterableObj[Symbol.iterator] = getIterator.bind(null, from, to);
 
-  const halfLength = Math.floor(inputArr.length / 2);
-
-  return (inputArr.length % 2 === 0)
-    ? [...inputArr.slice(halfLength), ...inputArr.slice(0, halfLength)]
-    : [...inputArr.slice(halfLength + 1), inputArr[halfLength], ...inputArr.slice(0, halfLength)];
+  return iterableObj;
 }
 
-function getDivisors(num) {
-  if (!Number.isFinite(num)) {
-    throw new Error();
-  }
+function getIterator(from, to) {
+  let currentValue = from - 1;
 
-  const divisors = [];
+  return {
+    next: () => {
+      currentValue++;
 
-  for (let i = num; i > 0; i--) {
-    if (num % i === 0) {
-      divisors.push(i);
+      return {
+        value: currentValue,
+        done: currentValue > to,
+      }
     }
   }
-
-  return divisors;
 }
 
-export { getDistance, switchPlaces, getDivisors };
+// could be passed any plain object, not only empty like in example;
+function createProxy(originalObj) {
+  if (!originalObj || typeof(originalObj) !== 'object' || Array.isArray(originalObj)) {
+    throw new Error();
+  }
+
+  const proxyHandler = {
+    get: proxyGetter,
+    set: proxySetter
+  };
+
+  return new Proxy(originalObj, proxyHandler);
+}
+
+function proxyGetter(target, prop) {
+  if (isPropExists(target, prop)) {
+    if (isPropIsObj(target, prop)) {
+      target[prop].readAmount = (target[prop].readAmount || 0) + 1;
+    } else {
+      target[prop] = {
+        value: target[prop],
+        readAmount: 1,
+      }
+    }
+
+    return target[prop];
+  }
+
+  return;
+}
+
+function proxySetter(target, prop, value) {
+  if (!isPropExists(target, prop)) {
+    target[prop] = {
+      value: value,
+      readAmount: 0,
+    }
+
+    return;
+  }
+
+  if (isPropIsObj(target, prop)) {
+    if (isObjValueTypeEqual(target, prop, value)) {
+      target[prop] = {...target[prop], value: value};
+    }
+  } else {
+    if (isPrimitiveTypeEqual(target, prop, value)) {
+      target[prop] = {value: value, readAmount: 0}
+    }
+  }
+}
+
+function isPropExists(obj, propName) {
+  return propName in obj;
+}
+
+function isPropIsObj(obj, propName) {
+  return obj[propName] && typeof(obj[propName]) === 'object';
+}
+
+function isObjValueTypeEqual(obj, propName, value) {
+  return typeof(value) === typeof(obj[propName].value) || typeof(value) === typeof(obj[propName]);
+}
+
+function isPrimitiveTypeEqual(obj, propName, value) {
+  return typeof(value) === typeof(obj[propName]);
+}
