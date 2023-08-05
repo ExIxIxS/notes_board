@@ -22,11 +22,15 @@ class NavPanel extends BasicComponent {
       isDisabled: argsObj.currentPage === 'favorites',
     })
 
+    const navChildren = (argsObj.children?.every((child) => child instanceof BasicComponent))
+      ? [mainPageButton, ...argsObj.children,favoritesPageButton]
+      : [mainPageButton, favoritesPageButton]
+
     super({
       elementType: 'nav',
       basicClassNames: DEFAULT_CLASS_LIST,
       additionalClassNames: argsObj?.additionalClassNames,
-      children: [mainPageButton, favoritesPageButton ],
+      children: navChildren,
     })
   }
 

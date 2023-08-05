@@ -43,7 +43,7 @@ html {
     --color-font-main-2: #285898;
     --color-valid: #3cb63b;
     --color-invalid: #de2626;
-    --border-radius-default: 20px;
+    --border-radius-default: 30px;
   }
 
 body {
@@ -64,7 +64,7 @@ body {
     font-size: 16px;
     background-image: url(../images/main-bg.jpg);
     background-size: 100% auto;
-    background-position: center 130px;
+    background-position: center 74px;
     background-repeat: no-repeat;
     background-attachment: fixed;
 }

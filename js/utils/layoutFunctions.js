@@ -10,11 +10,14 @@ function getLayout(pageName) {
 
   switch(pageName) {
     case ('favorites'): {
-      const navPanel = new NavPanel({currentPage: 'favorites'});
       const noteList = new NoteList(null, true);
       const searchPanel = new SearchPanel({noteList: noteList});
+      const navPanel = new NavPanel({
+        currentPage: 'favorites',
+        children: [searchPanel],
+      });
       const header = new Header({
-        children: [navPanel, searchPanel],
+        children: [navPanel],
         additionalClassNames: ['favorites-page-header']
       });
 
@@ -29,11 +32,15 @@ function getLayout(pageName) {
     case ('main'):
     default: {
       const noteList = new NoteList();
-      const navPanel = new NavPanel({currentPage: 'main'});
       const searchPanel = new SearchPanel({noteList: noteList});
+      const navPanel = new NavPanel({
+        currentPage: 'main',
+        children: [searchPanel],
+      });
+
       const noteCreator = new NoteCreatorForm({noteList: noteList});
       const header = new Header({
-        children: [navPanel, searchPanel],
+        children: [navPanel],
         additionalClassNames: ['main-page-header']
       });
 
