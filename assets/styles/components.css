@@ -1,0 +1,479 @@
+/* --- Dialog --- */
+
+.dialog {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  background-color: rgba(170, 170, 170, 0.5);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  overflow: auto;
+}
+
+.dialog.dialog--closed {
+  display: none;
+}
+
+.dialog .dialog__window {
+  width: 100%;
+  max-width: 510px;
+  min-width: 300px;
+  min-height: 240px;
+  padding: 6px 40px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  font-size: 26px;
+  text-align: center;
+  color: var(--color-font-main-2);
+  background-color: var(--color-background-main-1);
+  border: 2px solid var(--color-background-main-2);
+  border-radius: var(--border-radius-default);
+}
+
+.dialog .dialog__buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 30px;
+}
+
+.dialog .dialog__submit-button:hover {
+  background-color: var(--color-valid);
+}
+
+.dialog .dialog__close-button:hover {
+  background-color: var(--color-invalid);
+}
+
+@media (max-height: 510px) {
+  .dialog {
+    -webkit-box-pack: end;
+        -ms-flex-pack: end;
+            justify-content: flex-end;
+  }
+
+  .dialog .dialog__window {
+    min-height: 170px;
+  }
+
+}
+
+/* --- Header --- */
+
+.app-header {
+  width: 100%;
+  padding: 14px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  row-gap: 14px;
+  background-color: var(--color-background-main-2);
+}
+
+@media (max-width: 600px) {
+  .app-header {
+    padding: 14px 0;
+  }
+}
+
+/* --- Nav Panel --- */
+
+.nav-panel {
+  width: 580px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+}
+
+@media (max-width: 600px) {
+  .nav-panel {
+    width: 100%;
+    gap: 4px;
+  }
+}
+
+/* --- Nav Button --- */
+
+.nav-button button:hover {
+  color: var(--color-font-main-2);
+  background-color: var(--color-background-disabled-1);
+}
+
+@media (max-width: 600px) {
+  .nav-button button {
+    font-size: 4vw;
+  }
+}
+
+/* --- Search Panel --- */
+
+.search-panel {
+  max-width: 500px;
+  min-width: 150px;
+}
+
+.search-panel .search-panel__text-input {
+  width: 100%;
+  height: 40px;
+}
+
+/* --- Note--- */
+
+.note {
+  width: 100%;
+  max-width: 500px;
+  min-width: 280px;
+  padding: 10px;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  background-color: var(--color-background-default);
+  color: var(--color-font-main-2);
+  border-radius: var(--border-radius-default);
+}
+
+.note.bg-color-2a599d {
+  background-color: var(--color-background-note-1);
+  color: var(--color-font-note-1);
+}
+
+.note.bg-color-de2626 {
+  background-color: var(--color-background-note-2);
+  color: var(--color-font-note-2);
+}
+
+.note.bg-color-eeb9d7{
+  background-color: var(--color-background-note-3);
+  color: var(--color-font-note-3);
+}
+
+.note.bg-color-9ac157 {
+  background-color: var(--color-background-note-4);
+  color: var(--color-font-note-4);
+}
+
+.note.bg-color-62b7e0 {
+  background-color: var(--color-background-note-5);
+  color: var(--color-font-note-5);
+}
+
+.note .note__buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  gap: 10px;
+}
+
+.note .note__button {
+  padding: 4px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  color: inherit;
+  border: 2px solid;
+  background-color: var(--color-background-main-1);
+  border-color: inherit;
+  border-radius: 50%;
+}
+
+.note .note__button--close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.note .note__text-content {
+  padding: 6px 20px 6px 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-flex: 2;
+      -ms-flex-positive: 2;
+          flex-grow: 2;
+}
+
+.note .note__title, .note-form-title {
+  font-size: 28px;
+  margin: 10px 0;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+}
+
+.note .note__description {
+  max-width: 400px;
+  font-size: 22px;
+  margin: 6px 0;
+  overflow: hidden;
+}
+
+.note .note__date {
+  margin: 0;
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+  font-size: 14px;
+}
+
+.note .note__editor-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-flex: 2;
+      -ms-flex-positive: 2;
+          flex-grow: 2;
+}
+
+.note .text-data, .basic-form-input, .form-input {
+  width: 100%;
+}
+
+.note .form-submit-button {
+  max-width: 110px;
+  height: auto;
+  margin: 0;
+  padding: 8px 16px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  overflow: hidden;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-font-main-2);
+  border: none;
+  background-color: var(--color-background-main-1);
+}
+
+.note .form-input {
+  border-color: inherit;
+}
+
+.note .note-description-input {
+  font-size: 14px;
+}
+
+@media (max-width: 532px) {
+  .note .note__description {
+    max-width: 400px;
+  }
+
+}
+
+/* --- NoteList --- */
+
+.note-list {
+  width: 100%;
+  max-width: 516px;
+  max-height: 480px;
+  overflow: auto;
+  margin: 10px 0;
+  padding: 0 6px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  row-gap: 16px;
+  -ms-overflow-style: none; /* for Internet Explorer, Edge */
+  scrollbar-width: none; /* for Firefox */
+}
+
+.note-list::-webkit-scrollbar {
+  display: none; /* for Chrome, Safari, and Opera */
+}
+
+.note-list.note-list--favorites {
+  max-height: 840px;
+}
+
+/* --- Note creator --- */
+
+.note-creator-form {
+  width: 100%;
+  max-width: 590px;
+  padding: 10px 40px;
+  color: var(--color-font-main-2);
+  background-color: var(--color-background-main-3);
+  border-radius: 0 0 var(--border-radius-default) var(--border-radius-default);
+}
+
+.note-creator-form .basic-form-input {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  gap: 20px;
+}
+
+.note-creator-form .color-data {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap:wrap;
+      flex-wrap:wrap;
+  padding: 10px 2px;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.note-creator-form .color-data .basic-form-input {
+  width: auto;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 5px;
+  text-align: center;
+}
+
+.note-creator-form .color-data .form-label {
+  font-size: 12px;
+}
+
+.note-creator-form .form-submit-button {
+  width: 130px;
+  height: 39px;
+  margin: 10px;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+}
+
+#bg-color-option-1:checked {
+  border-color: var(--color-background-note-1);
+}
+
+#bg-color-option-2:checked {
+  border-color: var(--color-background-note-2);
+}
+
+#bg-color-option-3:checked {
+  border-color: var(--color-background-note-3);
+}
+
+#bg-color-option-4:checked {
+  border-color: var(--color-background-note-4);
+}
+
+#bg-color-option-5:checked {
+  border-color: var(--color-background-note-5);
+}
+
+@media (max-width: 756px) {
+  .note-creator-form {
+    padding: 10px;
+  }
+
+  .note-creator-form .text-data .form-label {
+    display: none;
+  }
+
+}
